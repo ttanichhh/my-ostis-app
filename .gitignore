@@ -1,21 +1,60 @@
-.idea
-.vscode
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
 
-bin/
+# Build
 build/
-install/
-*.bin
-repo
+bin/
+*.o
+*.a
+*.so
+*.dylib
 
-.cache/
-*.db
-*.txt
-!conanfile.txt
-!requirements.txt
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
 *.log
-*.scdb
+logs/
 
-__pycache__
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+compile_commands.json
 
-ConanPresets.json
-.venv
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary
+*.tmp
+*.temp
+*~
+
+# Documentation
+docs/_build/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Archives
+*.zip
+*.tar.gz
+*.tgz

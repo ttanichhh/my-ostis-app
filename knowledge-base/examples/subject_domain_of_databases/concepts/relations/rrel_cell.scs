@@ -1,0 +1,12 @@
+// rrel_cell.scs
+rrel_cell
+<- sc_node_role_relation;
+=> nrel_main_idtf:
+    [клетка']
+    (*
+        <- lang_ru;;
+    *);
+=> nrel_first_domain:
+    concept_column;
+=> nrel_second_domain:
+    concept_cell;;

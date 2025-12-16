@@ -1,0 +1,10 @@
+concept_column
+<- sc_node_class;
+=> nrel_main_idtf:
+    [колона клеток]
+    (*
+        <- lang_ru;;
+    *);
+<= nrel_inclusion:
+    concept_set;;
+

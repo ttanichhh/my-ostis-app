@@ -1,0 +1,35 @@
+table_of_cells
+<- concept_table;
+=> nrel_main_idtf:
+    [Таблица клеточек]
+    (*
+        <- lang_ru;;
+    *);
+-> rrel_column:
+    column1;
+    column2;;
+
+column1
+=> nrel_main_idtf:
+    [Колонка 1]
+    (*
+        <- lang_ru;;
+    *);
+<- concept_column;
+-> rrel_cell:
+    cell1x1;
+    cell1x2;;
+
+column2
+=> nrel_main_idtf:
+    [Колонка 2]
+    (*
+        <- lang_ru;;
+    *);
+<- concept_column;
+-> rrel_cell:
+    cell2x1;
+    cell2x2;;
+
+
+

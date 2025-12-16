@@ -1,0 +1,314 @@
+// program_for_searching_cells_with_needed_values.scs
+// ==========================================================================================
+// ПРОГРАММА: Программа поиска клеточек с нуными нам значениями
+// ==========================================================================================
+// НАЗНАЧЕНИЕ:
+//   Эта scp-программа ищет всех студентов с нудными клеточками,
+//   у которых среднее значение >= 20, и собирает их в результирующее множество.
+//
+// ВХОДНЫЕ ПАРАМЕТРЫ:
+//   .._table - университет, в рамках которого ищутся студенты с хорошими оценками.
+//
+// ВЫХОДНЫЕ ПАРАМЕТРЫ:
+//   .._value - результирующая структура, содержащая все клеточки таблицы со 
+//						  значением >= 20.
+//
+//
+// ИСПОЛЬЗУЕМЫЕ КЛЮЧЕВЫЕ SC-ЭЛЕМЕНТЫ:
+//   - concept_table: класс клеточек
+//   - nrel_column: связывает таблицу с ее столбцами
+//   - rrel_cell: связывает столбцы с ее клеточками
+//   - concept_cell: класс клеточек
+//   - nrel_value: содержит среднюю оценку студента
+//
+// ==========================================================================================
+
+program_for_searching_cells_with_needed_values
+=> nrel_main_idtf:
+	[Программа поиска клеточек с значениями больше или равными 20]
+    (*
+        <- lang_ru;;
+    *);
+	[Program for searching values of cells]
+    (*
+        <- lang_en;;
+    *);
+<- scp_program;
+-> rrel_key_sc_element:
+    .._process;;
+
+program_for_searching_cells_with_needed_values = [*
+.._process
+<-_ scp_process;
+
+// ОБЪЯВЛЕНИЕ ВХОДНЫХ И ВЫХОДНЫХ ПАРАМЕТРОВ:
+_-> rrel_1:: rrel_in:: .._table; 
+_-> rrel_2:: rrel_out:: .._result_cells; 
+
+<=_ nrel_decomposition_of_action:: _...
+(*
+	// ШАГ 1: ИНИЦИАЛИЗАЦИЯ РЕЗУЛЬТИРУЮЩЕЙ СТРУКТУРЫ
+	_-> rrel_1:: .._generate_result_set_of_needed_values
+	(*
+		<-_ genElStr3;;
+
+		_-> rrel_1:: rrel_assign:: rrel_scp_var:: rrel_const:: rrel_node:: rrel_structure:: .._result_cells;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_from_result_cells_to_class;;
+		_-> rrel_3:: rrel_fixed:: rrel_scp_const:: concept_cell;;
+
+        // Перейти к проверке входного аргумента.
+		_=> nrel_goto:: .._check_table;;
+	*);;
+
+	// ШАГ 2: ПРОВЕРКА ВХОДНОГО АРГУМЕНТА
+	_-> .._check_table
+	(*
+		<-_ searchElStr3;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: concept_table;;
+		_-> rrel_2:: rrel_assign:: rrel_const_perm_pos_arc:: rrel_scp_var:: .._arc_from_class_to_table;;
+		_-> rrel_3:: rrel_fixed:: rrel_scp_const:: .._table;;
+
+		_=> nrel_then:: .._print_that_specified_argument_is_table;;
+		_=> nrel_else:: .._print_that_specified_argument_is_not_table;;
+	*);;
+
+	_-> .._print_that_specified_argument_is_table
+	(*
+		<-_ printNl;;		
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Specified argument is table];;
+
+		_=> nrel_goto:: .._search_table_columns;;
+	*);;
+
+	// ШАГ 3: ПОИСК ВСЕХ КОЛОН В ТАБЛИЦЕ
+	_-> .._search_table_columns
+	(*
+		<-_ searchSetStr5;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: .._table;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_from_table_to_column;;
+		_-> rrel_3:: rrel_assign:: rrel_scp_var:: rrel_const:: rrel_node:: .._column;;
+		_-> rrel_4:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_to_arc_from_table_to_column;;
+		_-> rrel_5:: rrel_fixed:: rrel_scp_const:: rrel_column;;
+	
+		_-> rrel_set_3:: rrel_assign:: rrel_scp_var:: .._found_columns;;
+
+		_=> nrel_then:: .._get_next_column;;
+		_=> nrel_else:: .._print_that_all_columns_were_iterated;;
+	*);;
+
+	// ШАГ 4: ВЫБРАТЬ КОЛОННУ ИЗ МНОЖЕСТВА НАЙДЕННЫХ КОЛОНН
+	_-> .._get_next_column
+	(*
+		<-_ searchElStr3;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: .._found_columns;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_from_column_set_to_column;;
+		_-> rrel_3:: rrel_assign:: rrel_scp_var:: .._column;;
+
+		_=> nrel_then:: .._pop_column_from_set;;
+		_=> nrel_else:: .._print_that_all_columns_were_iterated;;
+	*);;
+
+	// ШАГ 5: УДАЛИТЬ ВЫБРАННУЮ КОЛОННУ ИЗ МНОЖЕСТВА НАЙДЕННЫХ КОЛОНН
+	_-> .._pop_column_from_set
+	(*
+		<-_ eraseEl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: rrel_erase:: .._arc_from_column_set_to_column;;
+
+		_=> nrel_goto:: .._print_that_table_column_was_found;;
+	*);;
+
+	_-> .._print_that_table_column_was_found
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Column was found in specified table];;
+
+		_=> nrel_goto:: .._search_column_cells;;
+	*);;
+
+	// ШАГ 6: ПОИСК ВСЕХ КЛЕТОК В ТЕКУЩЕЙ КОЛОННЕ
+	_-> .._search_column_cells
+	(*
+		<-_ searchSetStr5;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: .._column;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_from_column_to_cell;;
+		_-> rrel_3:: rrel_assign:: rrel_scp_var:: rrel_const:: rrel_node:: .._cell;;
+		_-> rrel_4:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_to_arc_from_column_to_cell;;
+		_-> rrel_5:: rrel_fixed:: rrel_scp_const:: rrel_cell;;
+	
+		_-> rrel_set_3:: rrel_assign:: rrel_scp_var:: .._found_cells;;
+
+		_=> nrel_then:: .._get_next_cell;;
+		_=> nrel_else:: .._get_next_column;;
+	*);;
+
+	// ШАГ 7: ВЫБРАТЬ КЛЕТОЧКУ ИЗ МНОЖЕСТВА НАЙДЕННЫХ КЛЕТОЧЕК
+	_-> .._get_next_cell
+	(*
+		<-_ searchElStr3;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: .._found_cells;;
+		_-> rrel_2:: rrel_assign:: rrel_const_perm_pos_arc:: rrel_scp_var:: .._arc_from_cell_set_to_cell;;
+		_-> rrel_3:: rrel_assign:: rrel_scp_var:: .._cell;;
+		
+		_=> nrel_then:: .._pop_cell_from_set;;
+		_=> nrel_else:: .._print_that_all_cells_were_iterated;;
+	*);;
+
+	// ШАГ 8: УДАЛИТЬ ВЫБРАННУЮ КЛЕТОЧКУ ИЗ МНОЖЕСТВА НАЙДЕННЫХ КЛЕТОЧЕК
+	_-> .._pop_cell_from_set
+	(*
+		<-_ eraseEl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: rrel_erase:: .._arc_from_cell_set_to_cell;;
+
+		_=> nrel_goto:: .._print_that_column_cell_was_found;;
+	*);;
+
+	_-> .._print_that_column_cell_was_found
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Cell was found in specified column];;
+
+		_=> nrel_goto:: .._search_cell_value;;
+	*);;
+
+	// ШАГ 9: ПОЛУЧИТЬ ЗНАЧЕНИЕ КЛЕТКИ
+	_-> .._search_cell_value
+	(*
+		<-_ searchElStr5;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: .._cell;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const:: rrel_common_arc:: .._arc_from_cell_to_value;;
+		_-> rrel_3:: rrel_assign:: rrel_scp_var:: rrel_const:: rrel_node:: rrel_node_link:: .._value;;
+		_-> rrel_4:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_to_arc_from_cell_to_value;;
+		_-> rrel_5:: rrel_fixed:: rrel_scp_const:: nrel_value;;
+
+		_=> nrel_then:: .._print_that_value_is_found;;
+		_=> nrel_else:: .._print_that_value_is_not_found;;
+	*);;
+
+	_-> .._print_that_value_is_found
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Value is found for specified cell];;
+
+		_=> nrel_goto:: .._check_cell_value;;
+	*);;
+
+	// ШАГ 10: ПРОВЕРКА ПОРОГА ЗНАЧЕНИЯ
+	_-> .._check_cell_value
+	(*
+		<-_ ifGr;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: .._value;;
+		_-> rrel_2:: rrel_fixed:: rrel_scp_const:: [20.0];;
+
+		_=> nrel_then:: .._check_cell_class;;
+		_=> nrel_else:: .._get_next_cell;;
+	*);;
+
+	// ШАГ 11: ПРОВЕРКА ПРИНАДЛЕЖНОСТИ К КЛАССУ КЛЕТОЧЕК
+	_-> .._check_cell_class
+	(*
+		<-_ searchSetStr3;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: concept_cell;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_from_class_to_cell;;
+		_-> rrel_3:: rrel_fixed:: rrel_scp_var:: .._cell;;
+
+		_-> rrel_set_2:: rrel_fixed:: rrel_scp_var:: .._result_cells;;
+
+		_=> nrel_goto:: .._add_cell_to_result_cells_set;;
+	*);;
+
+	// ШАГ 12: ДОБАВИТЬ КЛЕТОЧКУ В РЕЗУЛЬТИРУЮЩЕЕ МНОЖЕСТВО
+	_-> .._add_cell_to_result_cells_set
+	(*
+		<-_ genElStr3;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: .._result_cells;;
+		_-> rrel_2:: rrel_assign:: rrel_scp_var:: rrel_const_perm_pos_arc:: .._arc_from_result_cells_set_to_cell;;
+		_-> rrel_3:: rrel_fixed:: rrel_scp_var:: .._cell;;
+
+		_=> nrel_goto:: .._print_that_cell_was_added_to_result_cells_set;;
+	*);;
+
+	_-> .._print_that_cell_was_added_to_result_cells_set
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Cell was added to result cells set];;
+
+		_=> nrel_goto:: .._get_next_cell;;
+	*);;
+
+	_-> .._print_that_value_is_not_found
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Value is not found for specified cell];;
+
+		_=> nrel_goto:: .._get_next_cell;;
+	*);;
+
+	_-> .._print_that_all_cells_were_iterated
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [All cells were iterated in specified column];;
+
+		_=> nrel_goto:: .._erase_found_cells_set;;
+	*);;
+
+	_-> .._erase_found_cells_set
+	(*
+		<-_ eraseEl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: rrel_erase:: .._found_cells;;
+
+		_=> nrel_goto:: .._get_next_column;;
+	*);;
+
+	_-> .._print_that_all_columns_were_iterated
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [All columns were iterated in specified table];;
+
+		_=> nrel_goto:: .._erase_found_columns_set;;
+	*);;
+
+	_-> .._erase_found_columns_set
+	(*
+		<-_ eraseEl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_var:: rrel_erase:: .._found_columns;;
+
+		_=> nrel_goto:: .._return_result;;
+	*);;
+
+	_-> .._print_that_specified_argument_is_not_table
+	(*
+		<-_ printNl;;
+
+		_-> rrel_1:: rrel_fixed:: rrel_scp_const:: [Specified argument is not table];;
+
+		// Перейти к завершению программы.
+		_=> nrel_goto:: .._return_result;;
+	*);;
+
+	// Завершить программу.
+	_-> .._return_result
+	(*
+		<-_ return;;
+	*);;
+*);;
+*];;

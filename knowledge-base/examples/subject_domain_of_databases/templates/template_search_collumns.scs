@@ -1,0 +1,53 @@
+@template_search_columns = {
+    rrel_init_template: {
+        rrel_template: [*
+            @input_param1 = (.._table <-_ concept_table);;
+            rrel_column _-> (.._table _-> .._column);;
+            @output_param1 = (.._column <-_ concept_column);;
+        *];
+        rrel_template_input_params: {
+            @input_param1
+        };
+        rrel_template_output_params: {
+            @output_param1
+        }
+     } (* <- nrel_search_set_template;; *);
+    rrel_next_template: {
+        rrel_init_template: {
+            rrel_template: [*
+                @input_param1 = (.._column <-_ concept_column);;
+                rrel_cell _-> (.._column _-> .._cell);;
+                @output_param1 = (.._cell <-_ concept_cell);;
+            *];
+            rrel_template_input_params: {
+                @input_param1
+            };
+            rrel_template_output_params: {
+                @output_param1
+            }
+        } (* <- nrel_search_set_template;; *);
+        rrel_next_template: {
+            rrel_init_template: {
+                rrel_template: [*
+                    @input_param1 = (.._cell <-_ concept_cell);;
+                    nrel_value _-> (.._cell _-> .._value);;
+                    @output_param1 = (.._value <-_ concept_value);;
+                *];
+                rrel_template_input_params: {
+                    @input_param1
+                };
+                rrel_template_output_params: {
+                    @output_param1
+                }
+            } (* <- nrel_search_template;; *)
+        } (* <- nrel_fixed_search_strategy_template;; *)
+    } (* <- nrel_fixed_search_strategy_template;; *)
+};;
+
+@template_search_columns
+<- nrel_fixed_search_strategy_template;
+=> nrel_main_idtf:
+    [Шаблон поиска колонок таблицы]
+    (*
+    	<- lang_ru;;
+    *);;

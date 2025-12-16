@@ -1,0 +1,22 @@
+{
+  "tests": 2,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "AgentTest",
+      "tests": 2,
+      "testsuite": [
+        {
+          "name": "IsomorphicTrees",
+          "file": "\/Users\/tatanasolovej\/ostis-example-app\/problem-solver\/cxx\/company_module\/test\/org_agent_tests.cpp",
+          "line": 39
+        },
+        {
+          "name": "DifferentTrees",
+          "file": "\/Users\/tatanasolovej\/ostis-example-app\/problem-solver\/cxx\/company_module\/test\/org_agent_tests.cpp",
+          "line": 63
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+concept_cell
+<- sc_node_class;
+=> nrel_main_idtf:
+    [клетка]
+    (*
+        <- lang_ru;;
+    *);
+<= nrel_inclusion:
+    concept_square;;
+

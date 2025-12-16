@@ -1,0 +1,27 @@
+table_of_cells
+
+-> rrel_row:
+    row1;
+    row2;;
+
+row1
+=> nrel_main_idtf:
+    [Строка 1]
+    (*
+        <- lang_ru;;
+    *);
+<- concept_row;
+-> rrel_cell_in_row:
+    cell1x1;
+    cell2x1;;
+
+row2
+=> nrel_main_idtf:
+    [Строка 2]
+    (*
+        <- lang_ru;;
+    *);
+<- concept_row;
+-> rrel_cell_in_row:
+    cell1x2;
+    cell2x2;;

@@ -1,0 +1,121 @@
+concept_director
+<- sc_node_class;
+=> nrel_main_idtf: [директор] (* <- lang_ru;; *);;
+
+concept_specialist
+<- sc_node_class;
+=> nrel_main_idtf: [специалист] (* <- lang_ru;; *);;
+
+concept_worker
+<- sc_node_class;
+=> nrel_main_idtf: [рабочий] (* <- lang_ru;; *);;
+
+nrel_work_high_connection
+<- sc_node_non_role_relation;
+=> nrel_main_idtf: [иметь высокую рабочую связь] (* <- lang_ru;; *);
+=> nrel_first_domain: concept_director;
+=> nrel_second_domain: concept_specialist;;
+
+nrel_work_connection
+<- sc_node_non_role_relation;
+=> nrel_main_idtf: [иметь рабочую связь] (* <- lang_ru;; *);
+=> nrel_first_domain: concept_specialist;
+=> nrel_second_domain: concept_worker;;
+
+action_find_common_high_connections
+<- sc_node_class;
+=> nrel_main_idtf: [действие: найти общие высокие связи] (* <- lang_ru;; *);
+<= nrel_inclusion: concept_information_action;;
+
+action_find_extended_connections
+<- sc_node_class;
+=> nrel_main_idtf: [действие: найти расширенные связи] (* <- lang_ru;; *);
+<= nrel_inclusion: concept_information_action;;
+
+director_Ceo
+<- concept_director;
+=> nrel_main_idtf: [Генеральный директор] (* <- lang_ru;; *);;
+
+specialist_Chief_of_Staff
+<- concept_specialist;
+=> nrel_main_idtf: [Руководитель аппарата] (* <- lang_ru;; *);;
+
+specialist_Commercial_Director
+<- concept_specialist;
+=> nrel_main_idtf: [Коммерческий директор] (* <- lang_ru;; *);;
+
+specialist_Technical_Director
+<- concept_specialist;
+=> nrel_main_idtf: [Технический директор] (* <- lang_ru;; *);;
+
+worker_Head_of_the_office
+<- concept_worker;
+=> nrel_main_idtf: [Начальник канцелярии] (* <- lang_ru;; *);;
+
+worker_Head_of_HR
+<- concept_worker;
+=> nrel_main_idtf: [Начальник отдела кадров] (* <- lang_ru;; *);;
+
+worker_Sales_Director
+<- concept_worker;
+=> nrel_main_idtf: [Директор по продажам] (* <- lang_ru;; *);;
+
+worker_Purchasing_Director
+<- concept_worker;
+=> nrel_main_idtf: [Директор по закупкам] (* <- lang_ru;; *);;
+
+worker_Chief_Project_Engineer
+<- concept_worker;
+=> nrel_main_idtf: [Главный инженер проекта] (* <- lang_ru;; *);;
+
+director_Strategist
+<- concept_director;
+=> nrel_main_idtf: [Стратег] (* <- lang_ru;; *);;
+
+specialist_Operational_leader
+<- concept_specialist;
+=> nrel_main_idtf: [Операционный лидер] (* <- lang_ru;; *);;
+
+specialist_Monetization_lead
+<- concept_specialist;
+=> nrel_main_idtf: [Лид по монетизации] (* <- lang_ru;; *);;
+
+specialist_Technical_leader
+<- concept_specialist;
+=> nrel_main_idtf: [Технический лидер] (* <- lang_ru;; *);;
+
+worker_Office_lead
+<- concept_worker;
+=> nrel_main_idtf: [Лид офиса] (* <- lang_ru;; *);;
+
+worker_Headhunter
+<- concept_worker;
+=> nrel_main_idtf: [Хедхантер] (* <- lang_ru;; *);;
+
+worker_Product_owner
+<- concept_worker;
+=> nrel_main_idtf: [Владелец продукта] (* <- lang_ru;; *);;
+
+worker_Supply_Manager
+<- concept_worker;
+=> nrel_main_idtf: [Менеджер поставок] (* <- lang_ru;; *);;
+
+worker_Solutions_architect
+<- concept_worker;
+=> nrel_main_idtf: [Архитектор решений] (* <- lang_ru;; *);;
+
+director_Ceo => nrel_work_high_connection: specialist_Chief_of_Staff; specialist_Commercial_Director; specialist_Technical_Director;;
+
+specialist_Chief_of_Staff => nrel_work_connection: worker_Head_of_the_office; worker_Head_of_HR;;
+
+specialist_Commercial_Director => nrel_work_connection: worker_Sales_Director; worker_Purchasing_Director;;
+
+specialist_Technical_Director => nrel_work_connection: worker_Chief_Project_Engineer;;
+
+director_Strategist => nrel_work_high_connection: specialist_Operational_leader; specialist_Monetization_lead; specialist_Technical_leader;;
+
+specialist_Operational_leader => nrel_work_connection: worker_Office_lead; worker_Headhunter;;
+
+specialist_Monetization_lead => nrel_work_connection: worker_Product_owner; worker_Supply_Manager;;
+
+specialist_Technical_leader => nrel_work_connection: worker_Solutions_architect;;

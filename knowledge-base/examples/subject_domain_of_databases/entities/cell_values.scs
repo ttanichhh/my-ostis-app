@@ -1,0 +1,31 @@
+value_10
+<- concept_value;
+=> nrel_main_idtf:
+    [10.0]
+    (*
+    <- lang_ru;;
+    *);;
+
+value_20
+<- concept_value;
+=> nrel_main_idtf:
+    [20.0]
+    (*
+    <- lang_ru;;
+    *);;
+
+value_30
+<- concept_value;
+=> nrel_main_idtf:
+    [30.0]
+    (*
+    <- lang_ru;;
+    *);;
+
+value_40
+<- concept_value;
+=> nrel_main_idtf:
+    [40.0]
+    (*
+    <- lang_ru;;
+    *);;

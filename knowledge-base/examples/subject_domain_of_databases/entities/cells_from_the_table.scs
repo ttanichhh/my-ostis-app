@@ -1,0 +1,41 @@
+cell1x1
+<- concept_cell;
+=> nrel_index:
+    [Клеточка 1x1]
+    (*
+        <- lang_ru;;
+    *);
+=> nrel_value:
+    [10.0];;
+
+cell1x2
+<- concept_cell;
+=> nrel_index:
+    [Клеточка 1x2]
+    (*
+        <- lang_ru;;
+    *);
+=> nrel_value:
+    [20.0];;
+
+cell2x1
+<- concept_cell;
+=> nrel_index:
+    [Клеточка 2x1]
+    (*
+        <- lang_ru;;
+    *);
+=> nrel_value:
+    [30.0];;
+
+cell2x2
+<- concept_cell;
+=> nrel_index:
+    [Клеточка 2x2]
+    (*
+        <- lang_ru;;
+    *);
+=> nrel_value:
+    [40.0];;
+
+

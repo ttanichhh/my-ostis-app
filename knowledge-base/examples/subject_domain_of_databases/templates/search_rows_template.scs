@@ -1,0 +1,38 @@
+@search_rows_template = {
+    rrel_init_template: {
+        rrel_template: [*
+            @input_param1 = (.._table <-_ concept_table);;
+            rrel_row _-> (.._table _-> .._row);;
+            @output_param1 = (.._row <-_ concept_row);;
+        *];
+        rrel_template_input_params: {
+            @input_param1
+        };
+        rrel_template_output_params: {
+            @output_param1
+        }
+    } (* <- nrel_search_set_template;; *);
+    rrel_next_template: {
+        rrel_init_template: {
+            rrel_template: [*
+                @input_param1 = (.._row <-_ concept_row);;
+                nrel_main_idtf _-> (.._row _=> .._name);;
+                @output_param1 = (.._name <-_ lang_ru);;
+            *];
+            rrel_template_input_params: {
+                @input_param1
+            };
+            rrel_template_output_params: {
+                @output_param1
+            }
+        } (* <- nrel_search_template;; *)
+    } (* <- nrel_fixed_search_strategy_template;; *)
+};;
+
+@search_rows_template
+<- nrel_fixed_search_strategy_template;
+=> nrel_main_idtf:
+    [Шаблон поиска строк таблицы]
+    (*
+        <- lang_ru;;
+    *);;

@@ -1,0 +1,53 @@
+sc_agent_for_searching_cells_with_needed_values
+=> nrel_main_idtf:
+	[sc-агент поиска клеточек с нужным значениями]
+    (*
+        <- lang_ru;;
+    *);
+	[sc-agent for searching cells with needed values]
+    (* 
+        <- lang_en;;
+    *);
+<- abstract_sc_agent;
+// Агент активируется при возникновении события создания выходящей дуги из класса action_initiated.
+=> nrel_primary_initiation_condition: 
+	(sc_event_after_generate_outgoing_arc => action_initiated);
+=> nrel_initiation_condition_and_result: 
+	(..sc_agent_for_searching_cells_with_needed_values_condition 
+=> ..sc_agent_for_searching_cells_with_needed_values_result);
+=> nrel_sc_agent_action_class:
+	action_search_cells_with_needed_values;
+<= nrel_sc_agent_key_sc_elements: 
+{
+	action_initiated;
+	action_search_cells_with_needed_values
+};
+=> nrel_inclusion: ...
+	(*
+		// Агент реализован на Языке SCP.
+		<- platform_independent_abstract_sc_agent;;
+		// Перечень программ sc-агента, включая агентную scp-программу.
+		<= nrel_sc_agent_program: 
+		{
+			agent_program_for_searching_cells_with_needed_values;
+			program_for_searching_cells_with_needed_values
+		};;
+
+		-> scp_agent_for_searching_cells_with_needed_values
+		(*
+			<- active_sc_agent;;
+		*);;  
+	*);;
+
+// экземпляром класса action_search_cells_with_needed_values 
+..sc_agent_for_searching_cells_with_needed_values_condition
+= [*
+	action_search_cells_with_needed_values _-> .._action;;
+	action_initiated _-> .._action;;
+	.._action _-> rrel_1:: .._table;;
+*];;
+
+..sc_agent_for_searching_cells_with_needed_values_result
+= [*
+	concept_cell _-> .._cell;;
+*];;

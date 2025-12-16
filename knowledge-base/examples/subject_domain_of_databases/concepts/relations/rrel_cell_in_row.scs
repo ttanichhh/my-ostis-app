@@ -1,0 +1,11 @@
+rrel_cell_in_row
+<- sc_node_role_relation;
+=> nrel_main_idtf:
+    [клетка в строке']
+    (*
+        <- lang_ru;;
+    *);
+=> nrel_first_domain:
+    concept_row;
+=> nrel_second_domain:
+    concept_cell;;
